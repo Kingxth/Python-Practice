@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Simple Calculitiez - </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+
+        <header class="dashboard-header">
+            <h1> Panel de Stats</h1>
+            <a href="{{ url_for('home') }}" class="btn-volver">← Volver</a>
+        </header>
+
+        <!-- Los KPIs   -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <h3>Total Intentos</h3>
+                <p class="kpi-value">{{ total_intentos }}</p>
+            </div>
+            <div class="kpi-card">
+                <h3> % de Aciertos</h3>
+                <p class="kpi-value">{{ porcentaje_acierto }}%</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Tiempo Promedio</h3>
+                <p class="kpi-value">{{ tiempo_promedio_seg }}s</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Partidas Jugadas</h3>
+                <p class="kpi-value">{{ partidas_jugadas }}</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Racha Maxima</h3>
+                <p class="kpi-value">{{ max_racha_historica }}</p>
+            </div>
+        </section>
+
+        <!-- Historial de Partidas Recientes -->
+        <section class="historial-section">
+            <h2>Ultimas Partidas</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Modo</th>
+                            <th>Tiempo Total</th>
+                            <th>Racha Max.</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if historial_partidas %}
+                            {% for partida in historial_partidas %}
+                            <tr>
+                                <td>#{{ partida.id }}</td>
+                                <td>{{ partida.modo | capitalize }}</td>
+                                <td>{{ partida.tiempo_total_seg }}s</td>
+                                <td>{{ partida.max_racha }}</td>
+                                <td>{{ partida.fecha }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="no-data">Aun no hay partidas, Juega una ronda</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

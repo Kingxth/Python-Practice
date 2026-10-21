@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #030303;
+    background-image: radial-gradient(#111111 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: #888;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.dashboard-container {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #161616;
+    padding-bottom: 1.5rem;
+}
+
+.dashboard-header h1 {
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.btn-volver {
+    background-color: #0a0a0a;
+    color: #aaa;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid #222;
+    transition: all 0.2s ease;
+}
+
+.btn-volver:hover {
+    background-color: #161616;
+    color: #fff;
+    border-color: #444;
+}
+
+/* KPIS */
+.kpi-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #080808;
+    border: 1px solid #161616;
+    border-radius: 12px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 3rem;
+    gap: 1rem;
+}
+
+.kpi-card {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #161616;
+    padding: 0 1rem;
+}
+
+.kpi-card:last-child {
+    border-right: none;
+}
+
+.kpi-card h3 {
+    font-size: 0.7rem;
+    color: #666;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+.kpi-value {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.025em;
+}
+
+/* Historical :D */
+.historial-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.table-container {
+    background-color: #080808;
+    border-radius: 12px;
+    border: 1px solid #161616;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 1rem 1.25rem;
+}
+
+th {
+    background-color: #050505;
+    color: #555;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border-bottom: 1px solid #161616;
+}
+
+td {
+    border-bottom: 1px solid #121212;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #0c0c0c;
+    color: #fff;
+}
+
+.no-data {
+    text-align: center;
+    color: #555;
+    padding: 3rem;
+}

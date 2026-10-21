@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculitiez</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3> Calculitiez </h3>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a> 
+            <a href="/config"> Config. Opera</a>
+            <a href="/logout" class="btn-salir"> Salir</a>
+        </nav>
+    </aside>
+
+    <main id="main-container" class="main-container">
+        
+        <section id="menu-juego" class="card-menu">
+            <h2> Modo de juego</h2>
+            
+            <div class="modos-container">
+                <button id="btn-classic" class="btn-principal">Classic Mode</button>
+            </div>
+
+            <h3>Operaciones</h3>
+            <div class="operaciones-grid">
+                <label class="op-checkbox">
+                    <input type="checkbox" id="op-basicas" value="basicas" checked>
+                    <span>(+ / -)</span>
+                </label>
+                <label class="op-checkbox">
+                    <input type="checkbox" id="op-multdiv" value="multdiv" checked>
+                    <span>(× / ÷)</span>
+                </label>
+                <label class="op-checkbox">
+                    <input type="checkbox" id="op-potencias" value="potencias">
+                    <span>Potencias</span>
+                </label>
+                <label class="op-checkbox">
+                    <input type="checkbox" id="op-raices" value="raices">
+                    <span>Raices</span>
+                </label>
+            </div>
+        
+        </section>
+
+        <section id="config-operaciones" class="card-menu hidden">
+            <h2>Config.</h2>
+            <div id="lista-config-ops"></div>
+            <div class="botones-config">
+                <button id="btn-guardar-config" class="btn-principal">Guardar</button>
+                <button id="btn-volver-desde-config" class="btn-volver-simple">Volver</button>
+            </div>
+        </section>
+
+        <section id="zona-juego" class="card-juego hidden">
+            <div class="juego-header">
+                <div class="marcador-tiempo">Time: <span id="tiempo-valor">00</span></div>
+                <div class="marcador-puntos">Score: <span id="puntos-valor">0</span></div>
+                <div class="marcador-racha">Racha: <span id="racha-valor">0</span></div>
+                <div class="marcador-dificultado"><span id="indicador-dificultad"></span></div>
+            </div>
+            
+            <div class="pantalla-pregunta">
+                <h1 id="pregunta-texto"></h1>
+                <input type="number" id="respuesta-usuario" autocomplete="off">
+            </div>
+            
+            <button id="btn-abandonar" class="btn-abandonar"> Desistir </button>
+        </section>
+
+        <div id="modal-resultados" class="modal hidden">
+            <div class="modal-contenido">
+                <h2> Se termino!</h2>
+                
+                <div class="score-destacado">
+                    <p>Score: <h1 id="score-final">0</h1> </p>
+                </div>
+
+                <h3> Difficult: </h3>
+                <ul id="lista-dificultades" class="lista-dificultades" style="color: white; font-size: 1.2em; font-style: italic;"></ul>
+
+                <button id="btn-volver-menu" class="btn-principal">Volver</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

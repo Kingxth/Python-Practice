@@ -1,0 +1,352 @@
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #080808;
+    background-image: radial-gradient(#302f2f 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #888;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    padding: 35px 24px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #0d0d0d;
+    background-color: #030303;
+    z-index: 90;
+    box-sizing: border-box;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-weight: 200;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    color: #f1f1f1;
+}
+
+.sidebar-menu {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 50px;
+}
+
+.sidebar-menu a {
+    color: #777;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+}
+
+.sidebar-menu a:hover, .sidebar-menu .btn-salir:hover {
+    color: #f1f1f1;
+}
+
+.sidebar-menu .btn-salir {
+    margin-top: auto;
+    color: #a33;
+}
+
+.main-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.main-container.full-width {
+    width: 100%;
+}
+
+.card-menu, .card-juego {
+    background: #060606;
+    border: 1px solid #141414;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card-menu h2, .card-juego h2 {
+    color: #f1f1f1;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 1.4rem;
+}
+
+.card-menu h3 {
+    color: #666;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+/* BOTONES */
+.btn-principal {
+    background: #111;
+    color: #f1f1f1;
+    border: 1px solid #222;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 100%;
+    transition: background 0.2s, border-color 0.2s;
+    font-family: inherit;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-principal:hover {
+    background: #1a1a1a;
+    border-color: #333;
+}
+
+.modos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Checkboxes operacioness */
+.operaciones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.op-checkbox {
+    background: #090909;
+    border: 1px solid #151515;
+    padding: 10px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: #999;
+    font-size: 0.85rem;
+    transition: border-color 0.2s;
+}
+
+.op-checkbox:hover {
+    border-color: #333;
+}
+
+.op-checkbox input[type="checkbox"] {
+    accent-color: #444;
+}
+
+/* Game*/
+.juego-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #121212;
+    padding-bottom: 15px;
+}
+
+.juego-header span {
+    color: #f1f1f1;
+    font-weight: 600;
+}
+
+.pantalla-pregunta {
+    text-align: center;
+    margin: 40px 0;
+}
+
+#pregunta-texto {
+    font-size: 3rem;
+    color: #f1f1f1;
+    margin-bottom: 25px;
+    font-weight: 350;
+    transition: color 0.1s;
+}
+
+#pregunta-texto.wrong {
+    color: #e55;
+}
+
+#respuesta-usuario {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    color: #f1f1f1;
+    font-size: 2rem;
+    text-align: center;
+    width: 160px;
+    padding: 10px;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+}
+
+#respuesta-usuario:focus {
+    border-color: #444;
+}
+
+.btn-abandonar {
+    background: transparent;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 0.8rem;
+    width: 100%;
+    margin-top: 20px;
+    font-family: inherit;
+}
+
+.btn-abandonar:hover {
+    color: #a44;
+}
+
+/* rtas */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(3, 3, 3, 0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-contenido {
+    background: #060606;
+    border: 1px solid #1c1c1c;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    width: 100%;
+    max-width: 380px;
+}
+
+.modal-contenido h2 {
+    color: #f1f1f1;
+    margin-top: 0;
+}
+
+.score-destacado h1 {
+    font-size: 3.5rem;
+    color: #f1f1f1;
+    margin: 10px 0 25px 0;
+    font-weight: 200;
+}
+
+.lista-dificultades {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.lista-dificultades li {
+    display: flex;
+    justify-content: space-between;
+    background: #090909;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #111;
+}
+
+.dificultad-tag.facil { color: #5a5; }
+.dificultad-tag.medio { color: #aa5; }
+.dificultad-tag.dificil { color: #a55; }
+
+/* Config */
+.config-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #080808;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #121212;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.dificultad-selector {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-dificultad {
+    background: #111;
+    border: 1px solid #222;
+    color: #666;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.btn-dificultad.active {
+    background: #222;
+    color: #f1f1f1;
+    border-color: #444;
+}
+
+.botones-config {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-volver-simple {
+    background: transparent;
+    border: 1px solid #222;
+    color: #888;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.btn-volver-simple:hover {
+    background: #0f0f0f;
+    color: #fff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+input[type=number] {
+    appearance: textfield;
+}
