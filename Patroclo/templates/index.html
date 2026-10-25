@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patroclo - Organizador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Patroclo</h1>
+            <p class="subtitle">Organizador de archivos</p>
+        </header>
+
+        <!-- Formulario  -->
+
+        <section class="card">
+            <h2>Rutas</h2>
+            
+            <div class="form-group">
+                <label for="origen">Carpeta Origen:</label>
+                <input type="text" id="origen" value="{{ default_origen }}">
+            </div>
+
+            <div class="form-group">
+                <label for="destino">Carpeta Destino:</label>
+                <input type="text" id="destino" value="{{ default_destino }}">
+            </div>
+
+            <button id="btn-organizar" onclick="organizarArchivos()">Ordenar</button>
+            <p id="status-message" class="message"></p>
+        </section>
+
+        <!-- Sección de Logs -->
+        <section class="card">
+            <h2>Registros (Logs)</h2>
+            <button onclick="cargarLogs()">Cargar Historial</button>
+            
+            <div class="logs-layout">
+                <ul id="lista-logs"></ul>
+                <div class="log-viewer">
+                    <pre id="contenido-log">Selecciona un registro...</pre>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
