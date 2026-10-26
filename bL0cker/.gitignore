@@ -1,0 +1,15 @@
+# Entornos virtuales
+venv/
+env/
+ENV/
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+config_objetivo.txt
+
+.vscode/
+.idea/
+*.swp
+*.swo
