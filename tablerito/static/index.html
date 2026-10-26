@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS - Tablerito </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div id="sidebar">
+        <div class="tool-group">
+            <label>Modo</label>
+            <button id="btn-draw" class="active">Lapiz (E)</button>
+            <button id="btn-rect">Recta (1)</button>
+            <button id="btn-line">Line (2)</button>
+            <button id="btn-erase">Borrador (B)</button>
+            <button id="btn-pan">Manito (Ctrl)</button>
+            <button id="btn-zoom">Lupa (3)</button>
+        </div>
+
+        <div class="tool-group">
+            <label>Historial</label>
+            <div class="history-tools">
+                <button id="btn-undo" title="Deshacer (Ctrl+Z)">↩</button>
+                <button id="btn-redo" title="Rehacer (Ctrl+Y)">↪</button>
+            </div>
+        </div>
+
+        <div class="tool-group">
+            <label>Colores</label>
+            <div class="color-palette">
+                <button class="color-btn active" data-color="#ffffff" style="background-color: #ffffff;"></button>
+                <button class="color-btn" data-color="#ff4d4d" style="background-color: #ff4d4d;"></button>
+                <button class="color-btn" data-color="#2ecc71" style="background-color: #2ecc71;"></button>
+                <button class="color-btn" data-color="#f1c40f" style="background-color: #f1c40f;"></button>
+                <button class="color-btn" data-color="#3498db" style="background-color: #3498db;"></button>
+                <button class="color-btn custom-color-picker" id="btn-custom-color" title="Color personalizado"></button>
+            </div>
+            <input type="color" id="hidden-color-picker" value="#ffffff">
+        </div>
+
+        <div class="tool-group">
+            <label>Grosor</label>
+            <select id="lineWidth">
+                <option value="2">2px</option>
+                <option value="5" selected>5px</option>
+                <option value="10">10px</option>
+                <option value="25">25px</option>
+                <option value="50">50px</option>
+                <option value="100">100px</option>
+            </select>
+        </div>
+
+        <div class="tool-group">
+            <button id="btn-import" style="background-color: #2d5a88; border-color: #3d70a5;" title="Importar imagen">Importar (4)</button>
+            <button id="btn-save" style="background-color: #235a34; border-color: #2e7a48;">Guardar</button>
+            <button id="btn-clear" style="background-color: #5a2323;" title="Borrar todo (Tecla 1)">Borrar</button>
+        </div>
+        
+        <input type="file" id="image-loader" accept="image/*" style="display: none;">
+
+        <div id="info-pointer">-</div>
+        <div id="zoom-display">100%</div>
+    </div>
+
+    <div id="canvas-container">
+        <div id="eraser-cursor"></div>
+        <canvas id="pizarra"></canvas>
+    </div>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script src="index.js"></script>
+</body>
+</html>
