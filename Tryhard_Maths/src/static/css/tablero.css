@@ -1,0 +1,297 @@
+.tablero-layout {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0a0a0a;
+    background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: #bebebe;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.canvas-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    border-right: 1px solid #1a1a1a;
+}
+
+.canvas-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    z-index: 10;
+}
+
+#pizarron {
+    flex-grow: 1;
+    background-color: #0f0f0f;
+    border: 1px solid #222;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    touch-action: none;
+    /* Cursor niceee */
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='3' fill='%23f3f2f2' stroke='%230f0f0f' stroke-width='1'/%3E%3C/svg%3E") 4 4, auto;
+}
+
+#pizarron.borrador-activo {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+.control-tablero {
+    width: 400px;
+    flex-shrink: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #0a0a0a;
+    overflow-y: auto;
+}
+
+.control-tablero h2 {
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: #a8a8a8;
+    margin-bottom: 20px;
+}
+
+.ecuacion-actual {
+    margin: 30px 0;
+    padding: 30px 20px;
+    border: 1px solid #1a1a1a;
+    background: #0e0e0e;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.ecuacion-actual h1 {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #f3f2f2;
+    margin: 0;
+    letter-spacing: 0.5px;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.ecuacion-actual h1 sup {
+    font-size: 1.1rem;
+    margin-top: -0.8rem;
+    margin-left: 2px;
+    display: inline-block;
+    color: #a8a8a8;
+}
+
+.ecuacion-actual h1 sub {
+    font-size: 1.1rem;
+    margin-bottom: -0.5rem;
+    display: inline-block;
+    color: #a8a8a8;
+}
+
+.ecuacion-actual h1 .math-symbol {
+    font-family: serif;
+    font-style: italic;
+    font-size: 2rem;
+}
+
+.ecuacion-actual h1 .integral {
+    font-size: 2.4rem;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.ecuacion-actual h1 .frac, 
+.ecuacion-actual h1 span.fraccion {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 0 5px;
+}
+
+.ecuacion-actual h1 .frac .numerator,
+.ecuacion-actual h1 span.fraccion .numerator {
+    border-bottom: 1.5px solid #f3f2f2;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+
+.ecuacion-actual h1 .frac .denominator,
+.ecuacion-actual h1 span.fraccion .denominator {
+    padding-top: 2px;
+}
+
+.input-respuesta-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.input-respuesta-grupo label {
+    font-size: 0.85rem;
+    color: #666;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+#inputs-dinamicos {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#inputs-dinamicos input#resp-tablero {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 14px;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #f3f2f2;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#inputs-dinamicos input#resp-tablero:focus {
+    border-color: #a8a8a8;
+}
+
+#inputs-dinamicos > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+}
+
+#inputs-dinamicos input[type="text"] {
+    width: 80px;
+    padding: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #f3f2f2;
+    outline: none;
+}
+
+#inputs-dinamicos span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f3f2f2;
+}
+
+.feedback-msg {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    height: 30px;
+}
+
+.btn-dificultad {
+    background: transparent;
+    border: 1px solid #333;
+    color: #555;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: 0.3s;
+}
+
+.btn-dificultad:hover, .btn-dificultad.active {
+    border-color: #a8a8a8;
+    color: #a8a8a8;
+    background: #111;
+}
+
+button.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #2980b9;
+}
+
+.btn-principal {
+    background: transparent;
+    border: 1px solid #333;
+    color: #a8a8a8;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.4s;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.btn-principal:hover {
+    border-color: #a8a8a8;
+    background: #111;
+}
+
+.btn-volver-simple {
+    background: transparent;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    text-decoration: none;
+    transition: 0.2s;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.btn-volver-simple:hover {
+    color: #d4d4d4;
+}
+
+.opciones-tablero-container {
+    margin-top: 20px;
+}
+
+.opciones-tablero-container h3 {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.opciones-tablero-container .operaciones-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.op-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #ccc;
+    cursor: pointer;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculitiez - Advanced Skills </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <style>
+        .arbol-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            color: #f3f2f2;
+            font-family: 'Inter', sans-serif;
+        }
+        .arbol-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .categoria-card {
+            background: #0e0e0e;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .categoria-card h3 {
+            margin-top: 0;
+            color: #a8a8a8;
+            font-weight: 400;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+        }
+        .habilidad-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .habilidad-item {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 15px;
+        }
+        .habilidad-nombre {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .barra-progreso-bg {
+            background: #222;
+            border-radius: 4px;
+            height: 8px;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .barra-progreso-fill {
+            background: #3498db;
+            height: 100%;
+            transition: width 0.4s ease;
+        }
+        .habilidad-stats {
+            font-size: 0.75rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="arbol-container">
+        <div class="arbol-header">
+            <h1>Skills de Intregrales & Derivadas </h1>
+            <a href="{{ url_for('home') }}" class="btn-volver-simple">← Volver al Inicio</a>
+        </div>
+
+        <div class="categoria-card">
+            <h3>Derivadas</h3>
+            <div class="habilidad-grid">
+                {% set subtemas_derivadas = ['derivadas_polinomio', 'derivadas_exponencial', 'derivadas_trigonometrica', 'derivadas_logaritmica'] %}
+                {% for sub in subtemas_derivadas %}
+                    {% set p = progreso.get(sub, {'porcentaje': 0, 'aciertos': 0, 'fallos': 0}) %}
+                    <div class="habilidad-item">
+                        <div class="habilidad-nombre">
+                            <span>{{ sub.replace('derivadas_', '').capitalize() }}</span>
+                            <span>{{ p.porcentaje }}%</span>
+                        </div>
+                        <div class="barra-progreso-bg">
+                            <div class="barra-progreso-fill" style="width: {{ p.porcentaje }}%;"></div>
+                        </div>
+                        <div class="habilidad-stats">
+                            <span>{{ p.aciertos }} aciertos</span>
+                            <span>{{ p.fallos }} fallos</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="categoria-card">
+            <h3>Integrales</h3>
+            <div class="habilidad-grid">
+                {% set subtemas_integrales = ['integrales_polinomio', 'integrales_exponencial', 'integrales_trigonometrica', 'integrales_partes', 'sustitucion_trig', 'fracciones_parciales'] %}
+                {% for sub in subtemas_integrales %}
+                    {% set p = progreso.get(sub, {'porcentaje': 0, 'aciertos': 0, 'fallos': 0}) %}
+                    <div class="habilidad-item">
+                        <div class="habilidad-nombre">
+                            <span>{{ sub.replace('integrales_', '').replace('_', ' ').capitalize() }}</span>
+                            <span>{{ p.porcentaje }}%</span>
+                        </div>
+                        <div class="barra-progreso-bg">
+                            <div class="barra-progreso-fill" style="width: {{ p.porcentaje }}%;"></div>
+                        </div>
+                        <div class="habilidad-stats">
+                            <span>{{ p.aciertos }} aciertos</span>
+                            <span>{{ p.fallos }} fallos</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

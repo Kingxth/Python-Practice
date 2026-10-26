@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculitiez - Practice Mo0o0de</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tablero.css') }}">
+</head>
+<body>
+    <div class="tablero-layout">
+        
+        <section class="canvas-container">
+            <div class="canvas-toolbar">
+                <button id="btn-borrador" class="btn-dificultad">Borrador</button>
+                <button id="btn-lapiz" class="btn-dificultad active">Lapiz</button>
+                <button id="btn-limpiar" class="btn-dificultad">Limpiar Todo</button>
+            </div>
+            <canvas id="pizarron"></canvas>
+        </section>
+
+        <section class="control-tablero">
+            <a href="/" class="btn-volver-simple">← Volver al Menu</a>
+            <h2>Modo Practica</h2>
+            
+            <div class="ecuacion-actual">
+                <h1 id="texto-ecuacion">Cargando...</h1>
+            </div>
+
+            <div class="input-respuesta-grupo" id="contenedor-inputs">
+                <label for="resp-tablero" id="label-respuesta">Escribe la respuesta:</label>
+                <div id="inputs-dinamicos">
+                    <input type="text" id="resp-tablero" autocomplete="off" placeholder="Resultado...">
+                </div>
+                
+                <button id="btn-verificar-tablero" class="btn-principal">Comprobar</button>
+            </div>
+            
+            <div id="retroalimentacion" class="feedback-msg"></div>
+
+
+            <!-- Selector de temas ( PRACTICA ) -->
+
+            <div class="opciones-tablero-container">
+                <h3>Tema de Practica</h3>
+                <select id="select-tema-practica" class="btn-principal" style="background: #141414; text-align: left; padding: 10px; margin-top: 5px;">
+                    <option value="derivadas">Derivadas</option>
+                    <option value="integrales">Integrales</option>
+                    <option value="ecuacion_1er_grado">Ecuaciones 1er Grado</option>
+                    <option value="ecuacion_2do_grado">Ecuaciones 2do Grado</option>
+                    <option value="factorizacion">Factorización</option>
+                    <option value="l_hopital">L'Hopital</option>
+                    <option value="optimizacion">Optimizacion</option>
+                    <option value="integrales_partes">Integrales por Partes</option>
+                    <option value="sustitucion_trig">Sustitución Trigonometrica</option>
+                    <option value="fracciones_parciales">Fracciones Parciales</option>
+                </select>
+                <button id="btn-cambiar-tema" class="btn-dificultad" style="width: 100%; margin-top: 10px;">Generar otro tema</button>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/practica.js') }}"></script>
+</body>
+</html>

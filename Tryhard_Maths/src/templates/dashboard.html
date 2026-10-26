@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculitiez - Mi Progreso</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main class="dashboard-container">
+        
+        <header class="dashboard-header">
+            <div>
+                <h1>Panel de Progreso</h1>
+                <p>Estudiante: <strong>{{ username }}</strong></p>
+            </div>
+            <a href="{{ url_for('home') }}" class="btn-volver">Volver al Juego</a>
+        </header>
+
+        <!-- Tarjetas KPI -->
+        <section class="dashboard-grid">
+            <div class="kpi-card">
+                <h3>Partidas Jugadas</h3>
+                <p class="kpi-blue">{{ partidas_jugadas | default(0) }}</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Ejercicios Resueltos</h3>
+                <p class="kpi-orange">{{ total_intentos | default(0) }}</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Precision General</h3>
+                <p class="kpi-green">{{ porcentaje_acierto | default(0) }}%</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Tiempo Promedio</h3>
+                <p class="kpi-pink">{{ tiempo_promedio_seg | default(0) }} s</p>
+            </div>
+            <div class="kpi-card">
+                <h3>Racha Máxima</h3>
+                <p class="kpi-blue">{{ max_racha_historica | default(0) }}</p>
+            </div>
+        </section>
+
+        <!-- RADAR / DESGLOSE POR CADA SKILL -->
+        <div class="dashboard-content-grid">
+            <section class="card-radar">
+                <h2>Radar de Rendimiento</h2>
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </section>
+
+            <section class="card-menu">
+                <h2>Desglose por Operacion</h2>
+                
+                {% if desglose %}
+                <table class="tabla-desglose">
+                    <thead>
+                        <tr>
+                            <th>Operacion</th>
+                            <th>Intentos</th>
+                            <th>Aciertos</th>
+                            <th>Tiempo Prom.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in desglose %}
+                        <tr>
+                            <td style="text-transform: capitalize;">{{ row['tipo_operacion'].replace('_', ' ') }}</td>
+                            <td>{{ row['total'] }}</td>
+                            <td>{{ row['aciertos'] }}</td>
+                            <td>{{ row['tiempo_promedio_seg'] }} s</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="empty-text">Sin registros</p>
+                {% endif %}
+            </section>
+        </div>
+
+        <!-- KPIs por dificultad -->
+        <section class="dashboard-levels-grid">
+            
+            <!-- Facil -->
+            <div class="card-menu">
+                <h2>Facil</h2>
+                <div class="lista-ops-nivel">
+                    {% if resumen_facil is defined and resumen_facil and resumen_facil.operaciones %}
+                        {% for op in resumen_facil.operaciones %}
+                        <div class="op-stats-row">
+                            <span class="capitalizar"><strong>{{ op.nombre }}</strong>: {{ op.porcentaje_habilidad }}%</span>
+                            <span class="detalles-stats">Racha: {{ op.racha }} | Fallos: {{ op.fallos }} | T. Prom: {{ op.tiempo_promedio }}s</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-nivel">Sin registros en nivel facil.</p>
+                    {% endif %}
+                </div>
+                <div class="nivel-resumen">
+                    <div class="resumen-item"><span>Partidas:</span> <strong>{{ resumen_facil.partidas if resumen_facil is defined and resumen_facil else 0 }}</strong></div>
+                    <div class="resumen-item"><span>Hab. Global:</span> <strong>{{ resumen_facil.porcentaje_global if resumen_facil is defined and resumen_facil else 0 }}%</strong></div>
+                </div>
+            </div>
+
+            <!-- MEDIO -->
+            <div class="card-menu">
+                <h2>Medio</h2>
+                <div class="lista-ops-nivel">
+                    {% if resumen_medio is defined and resumen_medio and resumen_medio.operaciones %}
+                        {% for op in resumen_medio.operaciones %}
+                        <div class="op-stats-row">
+                            <span class="capitalizar"><strong>{{ op.nombre }}</strong>: {{ op.porcentaje_habilidad }}%</span>
+                            <span class="detalles-stats">Racha: {{ op.racha }} | Fallos: {{ op.fallos }} | T. Prom: {{ op.tiempo_promedio }}s</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-nivel">Sin registros en nivel medio.</p>
+                    {% endif %}
+                </div>
+                <div class="nivel-resumen">
+                    <div class="resumen-item"><span>Partidas:</span> <strong>{{ resumen_medio.partidas if resumen_medio is defined and resumen_medio else 0 }}</strong></div>
+                    <div class="resumen-item"><span>Hab. Global:</span> <strong>{{ resumen_medio.porcentaje_global if resumen_medio is defined and resumen_medio else 0 }}%</strong></div>
+                </div>
+            </div>
+
+            <!-- Dificil -->
+            <div class="card-menu">
+                <h2>Dificil</h2>
+                <div class="lista-ops-nivel">
+                    {% if resumen_dificil is defined and resumen_dificil and resumen_dificil.operaciones %}
+                        {% for op in resumen_dificil.operaciones %}
+                        <div class="op-stats-row">
+                            <span class="capitalizar"><strong>{{ op.nombre }}</strong>: {{ op.porcentaje_habilidad }}%</span>
+                            <span class="detalles-stats">Racha: {{ op.racha }} | Fallos: {{ op.fallos }} | T. Prom: {{ op.tiempo_promedio }}s</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-nivel">Sin registros en nivel dificil.</p>
+                    {% endif %}
+                </div>
+                <div class="nivel-resumen">
+                    <div class="resumen-item"><span>Partidas:</span> <strong>{{ resumen_dificil.partidas if resumen_dificil is defined and resumen_dificil else 0 }}</strong></div>
+                    <div class="resumen-item"><span>Hab. Global:</span> <strong>{{ resumen_dificil.porcentaje_global if resumen_dificil is defined and resumen_dificil else 0 }}%</strong></div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Historial de Partidas -->
+        <section class="card-menu historial-section">
+            <h2>Partidas Recientes</h2>
+            
+            {% if historial_partidas %}
+            <table class="tabla-desglose">
+                <thead>
+                    <tr>
+                        <th>ID Partida</th>
+                        <th>Modo</th>
+                        <th>Score Final</th>
+                        <th>Racha Máx.</th>
+                        <th>Tiempo Total</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for partida in historial_partidas %}
+                    <tr>
+                        <td>#{{ partida['id'] }}</td>
+                        <td style="text-transform: capitalize;">{{ partida['modo'] or 'Clásico' }}</td>
+                        <td>{{ partida['score_final'] }} pts</td>
+                        <td>{{ partida['max_racha'] }}</td>
+                        <td>{{ partida['tiempo_total_seg'] }} s</td>
+                        <td class="fecha-texto">{{ partida['fecha'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="empty-text">No hay partidas guardadas.</p>
+            {% endif %}
+        </section>
+
+    </main>
+    <script>
+        // @ts-ignore
+        const rawDesglose = JSON.parse('{{ desglose | tojson | safe }}');
+    </script>
+    
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

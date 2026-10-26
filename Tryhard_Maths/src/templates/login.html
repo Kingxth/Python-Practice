@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculitiez - Acceso</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+    <main class="main-container full-width" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+        
+        <section class="card-menu" style="width: 100%; max-width: 400px; text-align: center;">
+            
+            <!-- FORMULARIO DE LOGIN -->
+            <div id="form-login-container">
+                <h2>Iniciar Sesión</h2>
+                <form action="/login" method="POST" style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+                        <label for="login-username">Usuario</label>
+                        <input type="text" id="login-username" name="username" required autocomplete="off" style="padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem;">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+                        <label for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" name="password" required style="padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem;">
+                    </div>
+
+                    <button type="submit" class="btn-principal" style="margin-top: 10px; cursor: pointer;">Entrar</button>
+                </form>
+                
+                <div style="margin-top: 20px; font-size: 0.9rem; color: #aaa;">
+                    ¿No tienes cuenta? <a href="#" onclick="toggleForms(); return false;" style="color: #4f46e5; text-decoration: none; font-weight: bold;">Regístrate aquí</a>
+                </div>
+            </div>
+
+            <div id="form-register-container" style="display: none;">
+                <h2>Crear Cuenta</h2>
+                <form action="/register" method="POST" style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+                        <label for="reg-username">Usuario</label>
+                        <input type="text" id="reg-username" name="username" required autocomplete="off" style="padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem;">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+                        <label for="reg-password">Contraseña</label>
+                        <input type="password" id="reg-password" name="password" required style="padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 1rem;">
+                    </div>
+
+                    <button type="submit" class="btn-principal" style="margin-top: 10px; cursor: pointer;">Registrarse</button>
+                </form>
+
+                <div style="margin-top: 20px; font-size: 0.9rem; color: #aaa;">
+                    ¿Ya tienes cuenta? <a href="#" onclick="toggleForms(); return false;" style="color: #4f46e5; text-decoration: none; font-weight: bold;">Inicia sesión</a>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        function toggleForms() {
+            const loginCard = document.getElementById('form-login-container');
+            const registerCard = document.getElementById('form-register-container');
+            
+            if (loginCard.style.display === 'none') {
+                loginCard.style.display = 'block';
+                registerCard.style.display = 'none';
+            } else {
+                loginCard.style.display = 'none';
+                registerCard.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

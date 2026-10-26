@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculitiez - Board Mode</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tablero.css') }}">
+</head>
+<body>
+    <div class="tablero-layout">
+        
+        <section class="canvas-container">
+            <div class="canvas-toolbar">
+                <button id="btn-borrador" class="btn-dificultad">Borrador</button>
+                <button id="btn-lapiz" class="btn-dificultad active">Lapiz</button>
+                <button id="btn-limpiar" class="btn-dificultad">Limpiar Todo</button>
+            </div>
+            <canvas id="pizarron"></canvas>
+        </section>
+
+        <section class="control-tablero">
+            <a href="/" class="btn-volver-simple">← Volver</a>
+            <h2>Ecuaciones</h2>
+            
+            <div class="ecuacion-actual">
+                <h1 id="texto-ecuacion"></h1>
+            </div>
+
+            <div class="input-respuesta-grupo" id="contenedor-inputs">
+                <label for="resp-tablero" id="label-respuesta">Escribe tu respuesta :D</label>
+                <div id="inputs-dinamicos">
+                    <input type="text" id="resp-tablero" autocomplete="off" placeholder="...">
+                </div>
+                
+                <button id="btn-verificar-tablero" class="btn-principal">Verificar</button>
+            </div>
+            
+            <div id="retroalimentacion" class="feedback-msg"></div>
+
+        </section>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/tablero.js') }}"></script>
+</body>
+</html>
