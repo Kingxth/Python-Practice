@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SOFA Corferias Map & Directory</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="h-full flex flex-col font-sans overflow-hidden bg-slate-950 text-slate-100 select-none">
+
+  <!-- Header Flotante en el Mapa GPS -->
+  <header class="absolute top-3 left-3 right-3 z-[1000] pointer-events-none flex items-center justify-between max-w-md mx-auto">
+    <div class="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-full px-3 py-1.5 pointer-events-auto flex items-center gap-2 shadow-2xl">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="text-xs font-bold text-slate-200">SOFA Live</span>
+    </div>
+
+    <!-- Checklist Progreso -->
+    <button id="checklistToggleBtn" class="pointer-events-auto bg-slate-900/90 border border-slate-800 text-purple-300 px-3 py-1.5 rounded-full text-xs font-bold shadow-2xl flex items-center gap-1.5 hover:border-purple-500/50 transition">
+      <i class="fa-solid fa-list-check"></i>
+      <span id="checkProgressText">0 / 0</span>
+    </button>
+
+    <!-- Botón Brújula -->
+    <button id="enableCompassBtn" class="pointer-events-auto bg-slate-900/90 border border-slate-800 text-pink-400 p-2.5 rounded-full shadow-lg hover:border-pink-500/50 transition flex items-center justify-center">
+      <i class="fa-solid fa-compass text-sm"></i>
+    </button>
+
+    <script type="module">
+      import { initCompass } from '/static/js/compass.js';
+      document.getElementById('enableCompassBtn').addEventListener('click', () => {
+        initCompass();
+      });
+    </script>
+  </header>
+
+  <!-- Mapa Principal Leaflet -->
+  <main class="relative flex-1 w-full h-full">
+    <div id="map" class="w-full h-full z-0"></div>
+
+    <!-- Panel Checklist Flotante -->
+    <div id="checklistDrawer" class="hidden absolute top-14 right-3 z-[1000] bg-slate-900/95 border border-slate-800 rounded-2xl p-3 w-56 max-h-80 overflow-y-auto space-y-1.5 shadow-2xl backdrop-blur-md">
+      <h4 class="text-[10px] font-bold uppercase tracking-wider text-purple-400 mb-1">Checklist Pabellones</h4>
+      <div id="checklistItems" class="space-y-1"></div>
+    </div>
+
+    <!-- Controls de Movimiento Simulado (D-Pad) -->
+    <div class="absolute bottom-6 right-4 z-[1000] flex flex-col items-center gap-1 bg-slate-900/90 border border-slate-800 backdrop-blur-md p-2 rounded-2xl shadow-2xl">
+      <span class="text-[9px] font-bold text-pink-400 uppercase tracking-widest mb-1">Caminar</span>
+      <button onclick="moveSimulatedPresence(1, 0)" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:bg-pink-600 text-slate-200 rounded-xl text-xs flex items-center justify-center shadow">▲</button>
+      <div class="flex gap-1">
+        <button onclick="moveSimulatedPresence(0, -1)" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:bg-pink-600 text-slate-200 rounded-xl text-xs flex items-center justify-center shadow">◄</button>
+        <button id="recenterBtn" class="w-8 h-8 bg-pink-600 hover:bg-pink-500 text-white rounded-xl text-xs flex items-center justify-center shadow-lg"><i class="fa-solid fa-crosshairs"></i></button>
+        <button onclick="moveSimulatedPresence(0, 1)" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:bg-pink-600 text-slate-200 rounded-xl text-xs flex items-center justify-center shadow">►</button>
+      </div>
+      <button onclick="moveSimulatedPresence(-1, 0)" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:bg-pink-600 text-slate-200 rounded-xl text-xs flex items-center justify-center shadow">▼</button>
+    </div>
+
+    <!-- OVERLAY DIRECTORIO DE EXPOSITORES EN HTML -->
+    <div id="canvasOverlay" class="hidden fixed inset-0 z-[2000] bg-slate-950 flex flex-col">
+      
+      <!-- Header del Pabellón -->
+      <div class="p-4 bg-slate-900 border-b border-slate-800 flex items-center justify-between sticky top-0 z-10 backdrop-blur-md">
+        <div>
+          <span id="canvasPabellonTag" class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Directorio de Expositores</span>
+          <h3 id="canvasPabellonTitle" class="text-base font-bold text-white leading-tight">Pabellón</h3>
+        </div>
+        <button id="closeCanvasBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-700 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-xmark"></i>
+          <span>Cerrar</span>
+        </button>
+      </div>
+
+      <!-- Contenedor del Listado y Buscador -->
+      <div class="flex-1 overflow-y-auto p-4 bg-slate-950">
+        <!-- Buscador Rápido de Tiendas -->
+        <div class="max-w-md mx-auto mb-4 relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+          <input type="text" id="searchStandInput" placeholder="Buscar por tienda, stand o categoría..." 
+            class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 transition">
+        </div>
+
+        <!-- Lista de Tarjetas (Grid adaptable: 1 columna en móvil, 2 en pantallas medianas) -->
+        <div id="pabellonGridHTML" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto pb-6">
+          <!-- Las tarjetas de las tiendas se cargarán dinámicamente aquí -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL DE DETALLES Y FICHA DEL EXPOSITOR -->
+  <div id="standModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[3000] flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-purple-500/40 rounded-2xl p-5 max-w-sm w-full shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-150">
+      
+      <button id="closeStandModalBtn" class="absolute top-3 right-3 text-slate-400 hover:text-white text-lg w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-800 transition z-10">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <!-- Header del Modal -->
+      <div class="flex items-start space-x-3 mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-purple-900/50 border border-purple-500/50 flex items-center justify-center text-purple-400 text-xl font-bold shrink-0">
+          <i class="fa-solid fa-store"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span id="modalPabellonBadge" class="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded-full">Pabellón</span>
+            <span id="modalStandNum" class="text-[9px] font-mono font-bold text-pink-400 bg-pink-950/80 border border-pink-500/30 px-2 py-0.5 rounded-full">STAND #101</span>
+          </div>
+          <h3 id="modalStandTitle" class="text-base font-bold text-white leading-snug">Nombre de la Empresa</h3>
+        </div>
+      </div>
+
+      <!-- Categoría -->
+      <div class="mb-3">
+        <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-bold mb-0.5">Categoría</span>
+        <span id="modalStandCat" class="text-xs text-purple-300 bg-purple-950/40 px-2.5 py-1 rounded-lg border border-purple-800/40 inline-block font-medium">Expositor Oficial</span>
+      </div>
+
+      <!-- Descripción -->
+      <div class="mb-4">
+        <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-bold mb-1">Acerca del Expositor</span>
+        <p id="modalStandDesc" class="text-xs text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-800 leading-relaxed">
+          Descripción del expositor.
+        </p>
+      </div>
+
+      <!-- Galería de Fotos / Archivos -->
+      <div class="mb-4">
+        <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-bold mb-2">Galería del Stand</span>
+        <div id="modalStandGallery" class="grid grid-cols-2 gap-2">
+          <!-- Fotos o archivos multimedia cargados dinámicamente -->
+        </div>
+      </div>
+
+      <!-- Enlace a la Web -->
+      <a id="modalStandWeb" href="#" target="_blank" class="w-full bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold py-2.5 rounded-xl flex items-center justify-center space-x-2 transition shadow-lg shadow-pink-600/30">
+        <span>Visitar Sitio Web Oficial</span>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/app.js"></script>
+  <script type="module" src="/static/js/controls_dev.js"></script>
+</body>
+</html>
