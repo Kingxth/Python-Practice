@@ -1,32 +1,36 @@
 Python
 
 <p align="center">
-<i>Exploring Python through code, experimentation, and practical projects.</i>
+<b>Code · Explore · Build</b>
+<br>
+<i>Personal projects, experiments & practical exercises.</i>
 </p>
 
-About
+<p align="center">
+<img src="https://img.shields.io/badge/Language-Python%203-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+<img src="https://img.shields.io/badge/Focus-Programming-0A192F?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Type-Personal%20Projects-2563EB?style=for-the-badge" />
+</p>
 
-Welcome to my Python Practice repository!
-This repository brings together a collection of personal projects, programming exercises, and experiments developed using Python. It serves as a space where I explore different programming concepts, test ideas, and turn what I learn into practical implementations.
-Rather than focusing exclusively on theoretical exercises, I use these projects to experiment with different approaches, solve problems, and become more familiar with Python and its possibilities.
+About this repository
 
-What to Expect
+A collection of Python projects, experiments, and practical exercises developed throughout my learning journey.
+A space to explore ideas, experiment with different concepts, solve problems, and turn knowledge into practical applications.
 
-The repository includes a variety of projects, ranging from small programming experiments and mathematical applications to tools exploring different areas of software development.
-Each project has its own purpose, complexity, and approach, reflecting different aspects of my learning process.
+What you'll find here
+	Description:
+[+] Projects independent Python applications and implementations.
+[+] Experiments	ideas, tests, and programming experiments.
+[+] Problem solving	logic, mathematical challenges, and exercises.
+[+] Learning practical exploration of Python concepts.
 
-Purpose
-
-My goal with this repository is to:
-
-Strengthen my understanding of Python and programming fundamentals.
+Objectives
+Strengthen Python programming fundamentals.
 Develop logical thinking and problem-solving skills.
-Explore different programming concepts and applications.
-Experiment with new ideas and approaches.
-Turn theoretical knowledge into practical experience.
-
-This repository is continuously evolving as I learn, build, and explore new possibilities with Python.
+Explore different programming concepts and techniques.
+Build practical applications through experimentation.
+Continuously improve code quality and understanding.
 
 <p align="center">
-<b>Learn by doing. Improve through building.</b>
+<b>Learn by doing, lets keep improving.</b>
 </p>
